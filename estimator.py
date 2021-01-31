@@ -1,5 +1,5 @@
 import time
-import random
+import random, math
 from random import randint
 
 # ++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -35,7 +35,14 @@ class Estimator():
             else:
                 return resampled[len(resampled)//2]
 
-
+    def calculate_SD(self, set):
+        # here we calculate standard error like in regression algorithme formula.
+        avg = self.calculate_mean(sorted(set))
+        N = len(set); tmp = 0
+        for i in set:
+            tmp += (i - avg)**2
+        sd = math.sqrt(tmp/N)
+        return sd
 
 if __name__ == '__main__':
     estim = Estimator()
@@ -46,15 +53,17 @@ if __name__ == '__main__':
     print("-dataset : ",estim.set, "\n-size : ",len(estim.set))
     print("step [5] : REPEATSTEP 2 though 4 10000 times (start of loop)")
     while counter < 10000:
-        print("+++++++++ {} ++++++++".format(counter))
-        print("\nstep [2,3] := RANDOM PICK UP FOR ALL SAMPLES(default=40)")
-        print("-picked up : ",estim.pick())
+        print("     +++++++++ {} ++++++++".format(counter))
+        print("\n   step [2,3] := RANDOM PICK UP FOR ALL SAMPLES(default=40)")
+        print("     -picked up : ",estim.pick())
 
-        print("\nstep [4] := CAULCULATE our SAMPLE STATISTIC(mean and median)")
+        print("\n   step [4] := CAULCULATE our SAMPLE STATISTIC(mean and median)")
         estim.mean_median[0].append(estim.calculate_mean(estim.pick()))       # mean
         estim.mean_median[1].append(estim.calculate_median(estim.pick()))       # median
-        print("-mean : ", estim.mean_median[0][-1], "\n-median : ", estim.mean_median[1][-1])
-        print("+++++++++++++++++++++++++++++++++++++++++")
+        print("-    mean : ", estim.mean_median[0][-1], "\n-median : ", estim.mean_median[1][-1])
         counter += 1
 
+    print("\nstep [6] := CAULCULATE STANDARD DEVIATION of distribution of our mean and median")
+    print("-SD of mean : ", estim.calculate_SD(estim.mean_median[0]))
+    print("-SD of median : ", estim.calculate_SD(estim.mean_median[1]))
     print("+++++++++++++++++++++++++++++++++++++++++")
