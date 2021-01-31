@@ -44,6 +44,12 @@ class Estimator():
         sd = math.sqrt(tmp/N)
         return sd
 
+    def small_centile(self, l):
+        return l[0] +(-1.96) * l[1]
+
+    def big_centile(self, l):
+        return l[0] + (1.96) * l[1]
+
 if __name__ == '__main__':
     estim = Estimator()
     counter = 0
@@ -63,7 +69,24 @@ if __name__ == '__main__':
         print("-    mean : ", estim.mean_median[0][-1], "\n-median : ", estim.mean_median[1][-1])
         counter += 1
 
-    print("\nstep [6] := CAULCULATE STANDARD DEVIATION of distribution of our mean and median")
+    print("\nstep [6] := CAULCULATE STANDARD DEVIATION of distribution of the 10,000 means and medians")
     print("-SD of mean : ", estim.calculate_SD(estim.mean_median[0]))
     print("-SD of median : ", estim.calculate_SD(estim.mean_median[1]))
+    print("\nstep [7] := CAULCULATE 2.5th and 97.5th centiles of the 10,000 means and medians")
+    # I done some reseach about The percentile , i found the formula and the general table of Z.
+    # formula x = avg + Z * median/ abd we deduce the Z.
+    #       1th - 99th : -/+2.326
+    #       2th - 97.5th : -/+1.960
+    #       5th- 95th :  -/+1.645
+    #       10th- 90th :  -/+1.282
+    #       25th- 75th :  -/+0.675
+    #       50th- 50th :  0
+    mean_of_mean = estim.calculate_mean(estim.mean_median[0])
+    mean_of_median = estim.calculate_mean(estim.mean_median[1])
+    sd_of_mean = estim.calculate_SD(estim.mean_median[0])
+    sd_of_median = estim.calculate_SD(estim.mean_median[1])
+    print(mean_of_mean, sd_of_mean)
+    print(mean_of_median, sd_of_median)
+    print("-2.5th and 97.5th centile of 10,000 means : {} and {}".format(estim.small_centile([mean_of_mean, sd_of_mean]), estim.big_centile([mean_of_mean, sd_of_mean])))
+    print("-2.5th and 97.5th centile of 10,000 medians : {} and {}".format(estim.small_centile([mean_of_median , sd_of_median]), estim.big_centile([mean_of_median , sd_of_median])))
     print("+++++++++++++++++++++++++++++++++++++++++")
