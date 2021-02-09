@@ -4,8 +4,8 @@ from random import randint
 
 # ++++++++++++++++++++++++++++++++++++++++++++++++++
 class Estimator():
-    def __init__(self):
-        self.set = self.dataset()
+    def __init__(self, samples=40):
+        self.set = self.dataset(samples)
         self.mean_median = [[], []]
 
 
@@ -13,7 +13,7 @@ class Estimator():
     def __del__(self):
         del self
     def __str__(self):
-        return "CLass of error estimator using bootstrap method."
+        return "Class of error estimator using bootstrap method."
 
 
     def dataset(self, samples=40):
@@ -53,12 +53,13 @@ class Estimator():
 if __name__ == '__main__':
     estim = Estimator()
     counter = 0
+    maximum = 10000
     print("+++++++++++++++++++++++++++++++++++++++++")
 
     print("step [1] := DATASET GENERATION")
     print("-dataset : ",estim.set, "\n-size : ",len(estim.set))
-    print("step [5] : REPEATSTEP 2 though 4 10000 times (start of loop)")
-    while counter < 10000:
+    print("step [5] : REPEAT STEP 2 though 4 10000 times (start of loop)")
+    while counter < maximum:
         print("     +++++++++ {} ++++++++".format(counter))
         print("\n   step [2,3] := RANDOM PICK UP FOR ALL SAMPLES(default=40)")
         print("     -picked up : ",estim.pick())
