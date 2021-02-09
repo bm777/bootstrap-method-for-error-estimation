@@ -4,8 +4,8 @@ from random import randint
 
 # ++++++++++++++++++++++++++++++++++++++++++++++++++
 class Estimator():
-    def __init__(self, samples=40):
-        self.set = self.dataset(samples)
+    def __init__(self, default=40):
+        self.set = self.dataset(samples=default)
         self.mean_median = [[], []]
 
 
