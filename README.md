@@ -19,7 +19,7 @@ maximum = 10000     # you have to set your max number for iteration
 ```
 - [x] Step [5] : REPEAT STEP 2 though 4 10000 times (start of loop)
 ```
-while counter < maximumю
+while counter < maximum
     # step [2,3] := RANDOM PICK UP FOR ALL SAMPLES(default=40)
     estim.pick()
     # step [4] := CAULCULATE our SAMPLE STATISTIC(mean and median)
